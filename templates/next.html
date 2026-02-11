@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Color Vision Checker - Professional Medical Assessment</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, #e8f4f8 0%, #f0f9ff 50%, #e0f2f1 100%);
+      min-height: 100vh;
+      color: #2c3e50;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Subtle Background Pattern */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(77, 150, 168, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(56, 178, 172, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(102, 187, 106, 0.06) 0%, transparent 50%);
+      animation: subtleShift 20s ease infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes subtleShift {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    /* Gentle Floating Particles */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      background: rgba(77, 150, 168, 0.2);
+      border-radius: 50%;
+      animation: gentleFloat 30s infinite;
+    }
+
+    .particle:nth-child(1) { width: 4px; height: 4px; left: 10%; animation-delay: 0s; }
+    .particle:nth-child(2) { width: 5px; height: 5px; left: 25%; animation-delay: 3s; }
+    .particle:nth-child(3) { width: 4px; height: 4px; left: 45%; animation-delay: 6s; }
+    .particle:nth-child(4) { width: 6px; height: 6px; left: 65%; animation-delay: 2s; }
+    .particle:nth-child(5) { width: 5px; height: 5px; left: 80%; animation-delay: 8s; }
+
+    @keyframes gentleFloat {
+      0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+      10% { opacity: 0.4; }
+      90% { opacity: 0.4; }
+      100% { transform: translateY(-50px) translateX(50px); opacity: 0; }
+    }
+
+    /* Content Wrapper */
+    .content-wrapper {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Professional Medical Header */
+    header {
+      background: linear-gradient(135deg, #4d96a8 0%, #38b2ac 100%);
+      padding: 28px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      box-shadow: 0 4px 20px rgba(77, 150, 168, 0.15);
+      position: relative;
+      animation: slideDown 0.6s ease;
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .back-arrow {
+      position: absolute;
+      left: 30px;
+      font-size: 28px;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .back-arrow:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateX(-4px);
+    }
+
+    .header-title {
+      font-size: 32px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .header-icon {
+      font-size: 38px;
+      animation: gentlePulse 3s ease infinite;
+    }
+
+    @keyframes gentlePulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    /* Clean Professional Cards */
+    .intro-section, .info-section {
+      max-width: 1100px;
+      margin: 40px auto;
+      background: white;
+      border-radius: 20px;
+      padding: 45px 50px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      line-height: 1.8;
+      border: 1px solid rgba(77, 150, 168, 0.1);
+      animation: fadeInUp 0.8s ease;
+    }
+
+    @keyframes fadeInUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .intro-section h1 {
+      font-size: 32px;
+      color: #2c5f6f;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    .intro-section p, .info-section p {
+      font-size: 18px;
+      color: #546e7a;
+      line-height: 1.9;
+    }
+
+    .info-section {
+      text-align: left;
+      animation-delay: 0.2s;
+    }
+
+    .info-section h2 {
+      color: #2c5f6f;
+      font-size: 28px;
+      margin-bottom: 30px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .type-card {
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2f1 100%);
+      border-radius: 16px;
+      padding: 22px 28px;
+      margin-bottom: 18px;
+      border-left: 5px solid #4d96a8;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .type-card:hover {
+      transform: translateX(8px);
+      box-shadow: 0 4px 20px rgba(77, 150, 168, 0.15);
+      border-left-color: #38b2ac;
+    }
+
+    .type-card strong {
+      font-size: 19px;
+      color: #2c5f6f;
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 40px 20px 80px;
+    }
+
+    /* Grid with Smooth Animation */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 28px;
+      margin-top: 20px;
+    }
+
+    /* Clean Test Cards */
+    .test-item {
+      background: white;
+      border-radius: 18px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+      padding: 30px 25px;
+      transition: all 0.3s ease;
+      text-align: center;
+      border: 2px solid rgba(77, 150, 168, 0.1);
+      position: relative;
+      animation: fadeInUp 0.6s ease backwards;
+    }
+
+    .test-item:nth-child(1) { animation-delay: 0.05s; }
+    .test-item:nth-child(2) { animation-delay: 0.1s; }
+    .test-item:nth-child(3) { animation-delay: 0.15s; }
+    .test-item:nth-child(4) { animation-delay: 0.2s; }
+    .test-item:nth-child(5) { animation-delay: 0.25s; }
+    .test-item:nth-child(6) { animation-delay: 0.3s; }
+    .test-item:nth-child(7) { animation-delay: 0.35s; }
+    .test-item:nth-child(8) { animation-delay: 0.4s; }
+    .test-item:nth-child(9) { animation-delay: 0.45s; }
+    .test-item:nth-child(10) { animation-delay: 0.5s; }
+    .test-item:nth-child(11) { animation-delay: 0.55s; }
+    .test-item:nth-child(12) { animation-delay: 0.6s; }
+
+    .test-item:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 35px rgba(77, 150, 168, 0.15);
+      border-color: #4d96a8;
+    }
+
+    .test-item p {
+      margin: 0 0 20px 0;
+      font-size: 17px;
+      font-weight: 600;
+      color: #2c5f6f;
+    }
+
+    .test-item img {
+      width: 100%;
+      max-width: 220px;
+      height: auto;
+      border-radius: 14px;
+      border: 3px solid rgba(77, 150, 168, 0.15);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+      margin-bottom: 20px;
+    }
+
+    .test-item:hover img {
+      transform: scale(1.03);
+      box-shadow: 0 8px 24px rgba(77, 150, 168, 0.2);
+      border-color: #4d96a8;
+    }
+
+    /* Professional Input Fields */
+    input[type="text"] {
+      padding: 13px 18px;
+      font-size: 17px;
+      margin-top: 8px;
+      border: 2px solid rgba(77, 150, 168, 0.25);
+      border-radius: 10px;
+      width: 95px;
+      text-align: center;
+      transition: all 0.3s ease;
+      background: #f8fbfd;
+      font-weight: 600;
+      color: #2c5f6f;
+    }
+
+    input[type="text"]:focus {
+      border-color: #4d96a8;
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(77, 150, 168, 0.1);
+      transform: scale(1.02);
+      background: white;
+    }
+
+    input[type="text"]::placeholder {
+      color: #b0bec5;
+    }
+
+    /* Professional Medical Button */
+    button {
+      display: block;
+      margin: 60px auto 0;
+      padding: 18px 55px;
+      background: linear-gradient(135deg, #4d96a8 0%, #38b2ac 100%);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 19px;
+      font-weight: 600;
+      box-shadow: 0 8px 20px rgba(77, 150, 168, 0.25);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      letter-spacing: 0.3px;
+    }
+
+    button::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      transform: translate(-50%, -50%);
+      transition: width 0.5s, height 0.5s;
+    }
+
+    button:hover::before {
+      width: 280px;
+      height: 280px;
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(77, 150, 168, 0.3);
+    }
+
+    button:active {
+      transform: translateY(-1px);
+    }
+
+    button span {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Professional Result Display */
+    .result {
+      margin-top: 50px;
+      font-size: 22px;
+      font-weight: 600;
+      text-align: center;
+      padding: 35px 40px;
+      background: white;
+      border-radius: 18px;
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.1);
+      white-space: pre-line;
+      line-height: 1.9;
+      border: 2px solid rgba(77, 150, 168, 0.2);
+      animation: scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: none;
+    }
+
+    .result.show {
+      display: block;
+    }
+
+    @keyframes scaleIn {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .result.normal {
+      background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+      color: #2e7d32;
+      border-color: #66bb6a;
+    }
+
+    .result.tritanopia {
+      background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+      color: #1565c0;
+      border-color: #42a5f5;
+    }
+
+    .result.protanopia {
+      background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+      color: #c62828;
+      border-color: #ef5350;
+    }
+
+    .result.deuteranopia {
+      background: linear-gradient(135deg, #fff8e1 0%, #ffe082 100%);
+      color: #f57f17;
+      border-color: #ffd54f;
+    }
+
+    .result.hybrid {
+      background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+      color: #6a1b9a;
+      border-color: #ab47bc;
+    }
+
+    .result-icon {
+      font-size: 44px;
+      margin-bottom: 15px;
+      display: block;
+      animation: gentleBounce 2s ease infinite;
+    }
+
+    @keyframes gentleBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    /* Progress Bar - Medical Style */
+    .progress-container {
+      max-width: 600px;
+      margin: 40px auto;
+      background: rgba(77, 150, 168, 0.1);
+      border-radius: 20px;
+      height: 10px;
+      overflow: hidden;
+      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #4d96a8 0%, #38b2ac 100%);
+      border-radius: 20px;
+      transition: width 0.4s ease;
+      box-shadow: 0 2px 8px rgba(77, 150, 168, 0.3);
+    }
+
+    .progress-text {
+      text-align: center;
+      color: #546e7a;
+      margin-top: 12px;
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    /* Medical Badge */
+    .medical-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #e8f4f8 0%, #e0f2f1 100%);
+      color: #2c5f6f;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      border: 1px solid rgba(77, 150, 168, 0.2);
+      margin-top: 15px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      header {
+        padding: 20px 15px;
+      }
+
+      .header-title {
+        font-size: 22px;
+      }
+
+      .back-arrow {
+        left: 15px;
+        width: 42px;
+        height: 42px;
+        font-size: 24px;
+      }
+
+      .intro-section, .info-section {
+        padding: 30px 25px;
+        margin: 25px 15px;
+      }
+
+      .intro-section h1 {
+        font-size: 26px;
+      }
+
+      .info-section h2 {
+        font-size: 24px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      input[type="text"] {
+        width: 85px;
+        font-size: 16px;
+      }
+
+      button {
+        padding: 16px 40px;
+        font-size: 18px;
+      }
+
+      .result {
+        font-size: 19px;
+        padding: 28px 22px;
+      }
+    }
+
+    /* Professional Scrollbar */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(77, 150, 168, 0.05);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(135deg, #4d96a8 0%, #38b2ac 100%);
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(135deg, #3a7d8d 0%, #2d9189 100%);
+    }
+
+    /* Medical Info Notice */
+    .medical-notice {
+      background: linear-gradient(135deg, #e3f2fd 0%, #e8f5e9 100%);
+      border-left: 4px solid #4d96a8;
+      padding: 20px 25px;
+      border-radius: 12px;
+      margin-top: 30px;
+      color: #37474f;
+      font-size: 14px;
+      line-height: 1.7;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .medical-notice strong {
+      color: #2c5f6f;
+      display: block;
+      margin-bottom: 8px;
+      font-size: 15px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Gentle Floating Particles -->
+  <div class="particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+
+  <!-- Content Wrapper -->
+  <div class="content-wrapper">
+    <header>
+      <a href="/" class="back-arrow">&#8592;</a>
+      <div class="header-title">
+        <span class="header-icon">👁️</span>
+        Color Vision Assessment
+      </div>
+    </header>
+
+    <div class="intro-section">
+      <h1>Welcome to the Professional Color Vision Test</h1>
+      <p>
+        This comprehensive assessment uses <strong>Ishihara plates</strong> — the gold standard in color vision testing used by healthcare professionals worldwide — to identify potential color vision deficiencies. Simply examine each image carefully and enter the number you perceive. Your results will provide valuable insights into your color perception abilities.
+      </p>
+      <div class="medical-badge">
+        <span>✓</span> Clinically Validated Testing Method
+      </div>
+    </div>
+
+    <div class="info-section">
+      <h2>Understanding Color Vision Deficiencies</h2>
+      
+      <div class="type-card">
+        <strong>🔴 Protanopia (Red-Green Deficiency)</strong>
+        A red-green color vision deficiency caused by missing or non-functional red cones in the retina. Red colors may appear dark, brownish, or even black, making it difficult to distinguish reds from greens and browns. Affects approximately 1% of males.
+      </div>
+
+      <div class="type-card">
+        <strong>🟢 Deuteranopia (Green Deficiency)</strong>
+        The most common form of red-green deficiency caused by absent green cones. Individuals may confuse greens with reds, oranges, or browns, and experience difficulty with green-yellow distinctions. Affects approximately 1% of males.
+      </div>
+
+      <div class="type-card">
+        <strong>🔵 Tritanopia (Blue-Yellow Deficiency)</strong>
+        A rare blue-yellow color deficiency caused by missing blue cones. People with tritanopia struggle to differentiate blues from greens and yellows from pinks or purples. Affects less than 1% of the population equally in males and females.
+      </div>
+
+      <div class="type-card">
+        <strong>🌀 Hybrid Color Blindness</strong>
+        A complex condition involving symptoms from multiple types of color blindness, leading to broader difficulties in color discrimination across various hues. Requires comprehensive professional evaluation.
+      </div>
+
+      <div class="medical-notice">
+        <strong>⚕️ Important Medical Notice</strong>
+        This online test is a screening tool and not a substitute for professional medical diagnosis. If you suspect you have a color vision deficiency, please consult an optometrist or ophthalmologist for a comprehensive eye examination and proper diagnosis.
+      </div>
+    </div>
+
+    <div class="container">
+      <!-- Progress Indicator -->
+      <div class="progress-container">
+        <div class="progress-bar" id="progressBar" style="width: 0%;"></div>
+      </div>
+      <div class="progress-text" id="progressText">0 of 12 questions completed</div>
+
+      <div class="grid">
+        <!-- 12 test items -->
+        <div class="test-item">
+          <p>Question 1 of 12</p>
+          <img src="/static/test/b6.jpg" alt="Ishihara Plate 1"/>
+          <input type="text" id="ans1" placeholder="?" maxlength="3" oninput="updateProgress()" autocomplete="off"/>
+        </div>
+
+        <div class="test-item">
+          <p>Question 2 of 12</p>
+          <img src="/static/test/g16.png" alt="Ishihara Plate 2"/>
+          <input type="text" id="ans2" placeholder="?" maxlength="3" oninput="updateProgress()" autocomplete="off"/>
+        </div>
+
+        <div class="test-item">
+          <p>Question 3 of 12</p>
+          <img src="/static/test/grey26.png" alt="Ishihara Plate 3"/>
+          <input type="text" id="ans3" placeholder="?" maxlength="3" oninput="updateProgress()" autocomplete="off"/>
+        </div>
+
+        <div class="test-item">
+          <p>Question 4 of 12</p>
+          <img src="/static/test/p29.png" alt="Ishihara Plate 4"/>
+          <input type="text" id="ans4" placeholder="?" maxlength="3" oninput="updateProgress()" autocomplete="off"/>
+        </div>
+
+        <div class="test-item">
+          <p>Question 5 of 12</p>
+          <img src="/static/test/g7.png" alt="Ishihara Plate 5"/>
+          <input type="text" id="ans5" placeholder="?" maxlength="3" oninput="updateProgress()" autocomplete="off"/>
+        </div>
+
+        <div class="test-item">
+          <p>Question 6 of 12</p>
+          <img src="/static/test/g73.png" alt="Ishihara Plate 6"/>
+          <input type="text" id="ans6" placeholder="?" maxlength="3" oninput="updateProgress()" autocomplete="off"/>
+        </div>
+
+        <div class="test-item">
+          <p>Question 7 of 12</p>
+          <img src="/static/test/r8.png" alt="Ishihara Plate 7"/>
+          <input type="text" id="ans7" placeholder="?" maxlength="3" oninput="updateProgress()" autocomplete="off"/>
+        </div>
+
+        <div class="test-item">
+          <p>Question 8 of 12</p>
+          <img src="/static/test/b7.png" alt="Ishihara Plate 8"/>
+          <input type="text" id="ans8" placeholder="?" maxlength="3" oninput="updateProgress()" autocomplete="off"/>
+        </div>
+
+        <div class="test-item">
+          <p>Question 9 of 12</p>
+          <img src="/static/test/r6.png" alt="Ishihara Plate 9"/>
+          <input type="text" id="ans9" placeholder="?" maxlength="3" oninput="updateProgress()" autocomplete="off"/>
+        </div>
+
+        <div class="test-item">
+          <p>Question 10 of 12</p>
+          <img src="/static/test/r16.png" alt="Ishihara Plate 10"/>
+          <input type="text" id="ans10" placeholder="?" maxlength="3" oninput="updateProgress()" autocomplete="off"/>
+        </div>
+
+        <div class="test-item">
+          <p>Question 11 of 12</p>
+          <img src="/static/test/g74.png" alt="Ishihara Plate 11"/>
+          <input type="text" id="ans11" placeholder="?" maxlength="3" oninput="updateProgress()" autocomplete="off"/>
+        </div>
+
+        <div class="test-item">
+          <p>Question 12 of 12</p>
+          <img src="/static/test/r45.png" alt="Ishihara Plate 12"/>
+          <input type="text" id="ans12" placeholder="?" maxlength="3" oninput="updateProgress()" autocomplete="off"/>
+        </div>
+      </div>
+
+      <button onclick="checkAnswers()">
+        <span>🔬 Analyze My Results</span>
+      </button>
+      
+      <div class="result" id="result"></div>
+    </div>
+  </div>
+
+  <script>
+    // Progress tracking
+    function updateProgress() {
+      const inputs = document.querySelectorAll('input[type="text"]');
+      let filled = 0;
+      
+      inputs.forEach(input => {
+        if (input.value.trim() !== '') filled++;
+      });
+      
+      const percentage = (filled / 12) * 100;
+      document.getElementById('progressBar').style.width = percentage + '%';
+      document.getElementById('progressText').textContent = `${filled} of 12 questions completed`;
+    }
+
+    function checkAnswers() {
+      const answers = [
+        { id: 'ans1', correct: '6' },
+        { id: 'ans2', correct: '16' },
+        { id: 'ans3', correct: '26' },
+        { id: 'ans4', correct: '29' },
+        { id: 'ans5', correct: '7' },
+        { id: 'ans6', correct: '73' },
+        { id: 'ans7', correct: '8' },
+        { id: 'ans8', correct: '7' },
+        { id: 'ans9', correct: '6' },
+        { id: 'ans10', correct: '16' },
+        { id: 'ans11', correct: '74' },
+        { id: 'ans12', correct: '45' },
+      ];
+
+      // Check if all questions are answered
+      let unanswered = 0;
+      answers.forEach(item => {
+        if (document.getElementById(item.id).value.trim() === '') {
+          unanswered++;
+        }
+      });
+
+      if (unanswered > 0) {
+        alert(`⚕️ Please complete all questions.\n\nYou have ${unanswered} unanswered question${unanswered > 1 ? 's' : ''}.\n\nA complete assessment ensures accurate results.`);
+        return;
+      }
+
+      let tritanopiaCount = 0;
+      let protanopiaCount = 0;
+      let deuteranopiaCount = 0;
+
+      answers.forEach((item, index) => {
+        const userAnswer = document.getElementById(item.id).value.trim();
+        const isCorrect = userAnswer === item.correct;
+
+        if (!isCorrect) {
+          if ([0, 7].includes(index)) tritanopiaCount++;
+          if ([3, 6, 8, 11].includes(index)) protanopiaCount++;
+          if ([1, 4, 5, 9, 10].includes(index)) deuteranopiaCount++;
+        }
+      });
+
+      const affectedTypes = [tritanopiaCount > 0, protanopiaCount > 0, deuteranopiaCount > 0].filter(Boolean).length;
+
+      let result = '';
+      let resultClass = '';
+      let icon = '';
+
+      if (affectedTypes > 1) {
+        result = 'Assessment Result: Possible Hybrid Color Vision Deficiency\n\nYour responses indicate potential difficulty with multiple color ranges. This may suggest a combination of color vision deficiencies.\n\n⚕️ Professional Recommendation: We recommend scheduling a comprehensive eye examination with an optometrist or ophthalmologist for proper clinical diagnosis and guidance.';
+        resultClass = 'hybrid';
+        icon = '🔬';
+      } else if (tritanopiaCount > 0) {
+        result = 'Assessment Result: Possible Tritanopia (Blue-Yellow Deficiency)\n\nYour responses suggest potential difficulty distinguishing blue-yellow color ranges. This is a relatively rare condition affecting blue cone function.\n\n⚕️ Professional Recommendation: Consult with an eye care professional for comprehensive evaluation and personalized guidance.';
+        resultClass = 'tritanopia';
+        icon = '🔵';
+      } else if (protanopiaCount > 0) {
+        result = 'Assessment Result: Possible Protanopia (Red Deficiency)\n\nYour responses suggest potential difficulty with red color perception. This affects approximately 1% of males.\n\n⚕️ Professional Recommendation: We recommend professional evaluation by an optometrist or ophthalmologist for accurate diagnosis and support.';
+        resultClass = 'protanopia';
+        icon = '🔴';
+      } else if (deuteranopiaCount > 0) {
+        result = 'Assessment Result: Possible Deuteranopia (Green Deficiency)\n\nYour responses suggest potential difficulty with green color perception, the most common form of red-green color vision deficiency.\n\n⚕️ Professional Recommendation: Please consult an eye care professional for comprehensive assessment and guidance on managing this condition.';
+        resultClass = 'deuteranopia';
+        icon = '🟢';
+      } else {
+        result = 'Assessment Result: Normal Color Vision Indicated\n\nExcellent! Your responses suggest no significant color vision deficiencies. You appear to have normal color perception across all tested ranges.\n\n✓ All 12 Ishihara plates were correctly identified.\n\nNote: This screening is not a substitute for professional medical diagnosis. If you have concerns about your vision, please consult an eye care professional.';
+        resultClass = 'normal';
+        icon = '✅';
+      }
+
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = `<span class="result-icon">${icon}</span>${result}`;
+      resultDiv.className = 'result show ' + resultClass;
+
+      // Smooth scroll to result
+      setTimeout(() => {
+        resultDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 150);
+    }
+
+    // Add enter key support
+    document.querySelectorAll('input[type="text"]').forEach((input, index) => {
+      input.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          if (index < 11) {
+            document.getElementById(`ans${index + 2}`).focus();
+          } else {
+            checkAnswers();
+          }
+        }
+      });
+    });
+
+    // Auto-focus first input on page load
+    window.addEventListener('load', () => {
+      document.getElementById('ans1').focus();
+    });
+  </script>
+</body>
+</html>

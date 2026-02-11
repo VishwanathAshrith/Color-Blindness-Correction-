@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Color Vision Care System</title>
+
+<!-- ========================================================= -->
+<!-- ======================= STYLES ========================== -->
+<!-- ========================================================= -->
+<style>
+
+/* ========================================================= */
+/* ===== ROOT THEME (UNCHANGED – BASE PALETTE) ============== */
+/* ========================================================= */
+:root{
+  --bg:#f4fbf9;
+  --card:#ffffff;
+  --primary:#2bb0a6;
+  --accent:#1e8e9e;
+  --soft:#e6f7f4;
+  --text:#243333;
+  --muted:#6b8f8a;
+  --border:#d6eeea;
+}
+
+/* ========================================================= */
+/* ===== GLOBAL RESET ======================================= */
+/* ========================================================= */
+*{box-sizing:border-box;}
+
+body{
+  margin:0;
+  font-family:"Segoe UI",system-ui,-apple-system,sans-serif;
+  background:linear-gradient(180deg,#e9fbf7,#fdfefe);
+  color:var(--text);
+}
+
+/* ========================================================= */
+/* ===== HEADER ============================================= */
+/* ========================================================= */
+header{
+  background:linear-gradient(90deg,#1fa2a8,#38d2c2);
+  padding:22px 40px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  color:white;
+  box-shadow:0 6px 18px rgba(0,0,0,0.12);
+}
+
+header h1{
+  margin:0;
+  font-size:24px;
+  font-weight:600;
+}
+
+header a{
+  text-decoration:none;
+  color:#0f2f2c;
+  font-size:15px;
+  font-weight:700;
+
+  background:white;
+  padding:10px 20px;
+  border-radius:999px;
+
+  box-shadow:
+    0 6px 18px rgba(0,0,0,0.18),
+    inset 0 1px 0 rgba(255,255,255,0.6);
+
+  transition:all 0.2s ease;
+}
+
+/* ========================================================= */
+/* ===== HERO =============================================== */
+/* ========================================================= */
+.hero{
+  background:
+    linear-gradient(
+  to right,
+  rgba(244,251,249,0.95) 30%,
+  rgba(244,251,249,0.55) 60%,
+  rgba(244,251,249,0.25) 100%
+),
+    url("/static/eyebg.png");
+    
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  
+
+  min-height: 300px;
+  border-radius: 22px;
+  padding: 70px 40px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+  margin: 40px auto;
+  max-width: 1100px;
+}
+
+.hero h2{
+  text-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.hero p{
+  text-shadow: 0 1px 6px rgba(0,0,0,0.12);
+}
+
+/* ========================================================= */
+/* ===== CONTAINER ========================================== */
+/* ========================================================= */
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:20px;
+}
+
+/* ========================================================= */
+/* ===== MODE SELECTOR (PRIMARY CONTROL) ==================== */
+/* ========================================================= */
+.mode-selector{
+  display:flex;
+  justify-content:center;
+  margin:12px 0 28px;
+}
+
+/* === THIS IS THE POLISHED DROPDOWN YOU ASKED FOR === */
+.mode-selector select{
+  appearance:none;
+  -webkit-appearance:none;
+  -moz-appearance:none;
+
+  min-width:460px;
+  height:64px;
+  padding:0 64px 0 36px;
+
+  font-size:18px;
+  font-weight:800;
+  letter-spacing:0.4px;
+
+  color: #0f2f2c;        /* deep clinical green-black */
+  font-weight: 800;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2bb0a6,
+      #38d2c2
+    );
+
+  border:none;
+  border-radius:999px;
+
+  box-shadow:
+    0 14px 34px rgba(43,176,166,0.50),
+    inset 0 1px 0 rgba(255,255,255,0.45);
+
+  cursor:pointer;
+  transition:all 0.25s ease;
+
+ background-image:
+  linear-gradient(45deg, transparent 50%, #0f2f2c 50%),
+  linear-gradient(135deg, #0f2f2c 50%, transparent 50%);
+
+  background-position:
+    calc(100% - 36px) 28px,
+    calc(100% - 26px) 28px;
+  background-size:10px 10px,10px 10px;
+  background-repeat:no-repeat;
+}
+
+.mode-selector select:hover{
+  transform:translateY(-2px);
+  box-shadow:
+    0 20px 42px rgba(43,176,166,0.60),
+    inset 0 1px 0 rgba(255,255,255,0.5);
+}
+
+.mode-selector select:focus{
+  outline:none;
+  box-shadow:
+    0 0 0 5px rgba(43,176,166,0.35),
+    0 22px 44px rgba(43,176,166,0.65);
+}
+
+/* ========================================================= */
+/* ===== ACTION BUTTONS (IMAGE / CAMERA / VIDEO) ============ */
+/* ========================================================= */
+#actionChooser{
+  text-align:center;
+  margin-bottom:34px;
+}
+
+#actionChooser button{
+  min-width:220px;
+  margin:0 10px;
+}
+
+/* ========================================================= */
+/* ===== CLINICAL BUTTON STYLE ============================== */
+/* ========================================================= */
+button{
+  background:linear-gradient(135deg,#2bb0a6,#38d2c2);
+  color:white;
+  border:none;
+  padding:18px 34px;
+  font-size:17px;
+  font-weight:700;
+  border-radius:18px;
+  cursor:pointer;
+  box-shadow:
+    0 10px 26px rgba(43,176,166,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.35);
+  transition:all 0.25s ease;
+}
+
+button:hover{
+  transform:translateY(-2px);
+  box-shadow:
+    0 16px 36px rgba(43,176,166,0.45),
+    inset 0 1px 0 rgba(255,255,255,0.45);
+}
+
+button:active{
+  transform:translateY(0);
+  box-shadow:
+    0 8px 20px rgba(43,176,166,0.35),
+    inset 0 2px 6px rgba(0,0,0,0.12);
+}
+
+button:focus{
+  outline:none;
+  box-shadow:
+    0 0 0 4px rgba(43,176,166,0.35),
+    0 16px 36px rgba(43,176,166,0.45);
+}
+
+/* ========================================================= */
+/* ===== UPLOAD ZONE ======================================== */
+/* ========================================================= */
+.upload-zone{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  border:2px dashed #bfe6e1;
+  border-radius:16px;
+  padding:40px 20px;
+  cursor:pointer;
+  background:linear-gradient(180deg,#f4fbf9,#ecf9f6);
+}
+
+.upload-icon{
+  font-size:42px;
+  margin-bottom:12px;
+}
+
+.file-name{
+  margin-top:14px;
+  font-size:14px;
+  font-weight:600;
+  color:#1e8e9e;
+}
+
+/* ========================================================= */
+/* ===== MEDIA / PREVIEW ==================================== */
+/* ========================================================= */
+video{
+  width:100%;
+  border-radius:14px;
+  border:2px solid var(--border);
+}
+
+.preview{
+  text-align:center;
+  margin-top:40px;
+}
+
+.preview img{
+  max-height:320px;
+  border-radius:16px;
+  border:3px solid var(--border);
+  box-shadow:0 10px 26px rgba(0,0,0,0.15);
+}
+
+/* ========================================================= */
+/* ===== FOOTER ============================================= */
+/* ========================================================= */
+footer{
+  margin-top:80px;
+  padding:26px;
+  background:#e7f6f3;
+  text-align:center;
+  color:var(--muted);
+  font-size:14px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>👁️ Color Vision Care System</h1>
+  <a href="/test" target="_blank">Vision Test</a>
+</header>
+
+<section class="hero">
+  <h2>Clinical Color Vision Correction</h2>
+  <p>An assistive eye-care system designed to analyze and enhance color perception.</p>
+</section>
+
+<!-- ================= MODE SELECTOR ================= -->
+<div class="mode-selector">
+  <select id="blindnessType" onchange="onBlindnessSelect()">
+    <option disabled selected>Select Color Vision Deficiency</option>
+    <option value="protanopia">Protanopia</option>
+    <option value="deutranopia">Deuteranopia</option>
+    <option value="tritanopia">Tritanopia</option>
+    <option value="hybrid">Hybrid</option>
+  </select>
+</div>
+
+<!-- ================= ACTION CHOOSER ================= -->
+<div id="actionChooser" style="display:none;">
+  <button onclick="goTo('image')">🖼️ Image Correct</button>
+<button onclick="goTo('camera')">📷 Live Camera</button>
+<button onclick="goTo('video')">🎥 Video Correct</button>
+</div>
+
+<div class="container">
+
+<!-- ================= IMAGE SECTION ================= -->
+<div id="imageSection" style="display:none;">
+  <label class="upload-zone">
+    <input type="file" id="imageInput" accept="image/*" hidden>
+    <div class="upload-icon">📁</div>
+    Click to upload image
+  </label>
+  <div id="fileName" class="file-name"></div>
+  <button onclick="uploadAndGenerate()">Generate</button>
+</div>
+
+<!-- ================= CAMERA SECTION ================= -->
+<div id="cameraSection" style="display:none;">
+  <video id="video" autoplay playsinline></video>
+  <button onclick="captureImage()">Capture</button>
+</div>
+
+<!-- ================= VIDEO SECTION ================= -->
+<div id="videoSection" style="display:none;">
+  <input type="file" accept="video/mp4">
+  <p>Video correction coming next</p>
+</div>
+
+<div class="preview">
+  <img id="previewImage" style="display:none;">
+</div>
+
+</div>
+
+<footer>
+
+</footer>
+
+<!-- ================= SCRIPT ================= -->
+<script>
+let selectedFile=null;
+
+function onBlindnessSelect(){
+  document.getElementById("actionChooser").style.display="block";
+}
+
+function showSection(s){
+  ["image","camera","video"].forEach(x=>{
+    document.getElementById(x+"Section").style.display="none";
+  });
+  document.getElementById(s+"Section").style.display="block";
+}
+
+document.getElementById("imageInput").addEventListener("change",e=>{
+  selectedFile=e.target.files[0];
+  document.getElementById("fileName").innerText=selectedFile.name;
+});
+
+function uploadAndGenerate(){
+  if(!selectedFile){
+    alert("Upload image");
+    return;
+  }
+  const fd=new FormData();
+  fd.append("image",selectedFile);
+  fetch("/generate",{method:"POST",body:fd})
+    .then(r=>r.json())
+    .then(d=>{
+      const img=document.getElementById("previewImage");
+      img.src="/output/"+d.output_images[0]+"?t="+Date.now();
+      img.style.display="block";
+    });
+}
+function goTo(mode){
+  const type = document.getElementById("blindnessType").value;
+  if(!type){
+    alert("Please select color vision deficiency first");
+    return;
+  }
+  window.location.href = `/${mode}?type=${type}`;
+}
+
+</script>
+
+</body>
+</html>

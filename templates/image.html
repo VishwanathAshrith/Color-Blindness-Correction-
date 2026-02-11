@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Image Color Correction</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <style>
+    :root{
+      --bg:#f4fbf9;
+      --card:#ffffff;
+      --primary:#2bb0a6;
+      --accent:#1e8e9e;
+      --soft:#e6f7f4;
+      --text:#243333;
+      --muted:#6b8f8a;
+      --border:#d6eeea;
+    }
+
+    *{ box-sizing:border-box; }
+
+    body{
+      margin:0;
+      font-family:"Segoe UI",system-ui,sans-serif;
+      background:linear-gradient(180deg,#e9fbf7,#fdfefe);
+      color:var(--text);
+    }
+
+    /* ===== HEADER ===== */
+    header{
+      background:linear-gradient(90deg,#1fa2a8,#38d2c2);
+      padding:20px 36px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      color:white;
+      box-shadow:0 6px 18px rgba(0,0,0,0.12);
+    }
+
+    header h1{
+      margin:0;
+      font-size:22px;
+      font-weight:600;
+    }
+
+    header a{
+      color:white;
+      text-decoration:none;
+      background:rgba(255,255,255,0.25);
+      padding:10px 18px;
+      border-radius:999px;
+      font-size:15px;
+    }
+
+    /* ===== PAGE ===== */
+    .container{
+      max-width:1000px;
+      margin:50px auto;
+      padding:0 20px;
+    }
+
+    .card{
+      background:var(--card);
+      border-radius:26px;
+      padding:40px;
+      box-shadow:0 14px 36px rgba(0,0,0,0.12);
+    }
+
+    h2{
+      margin-top:0;
+      font-size:28px;
+      text-align:center;
+    }
+
+    .subtitle{
+      text-align:center;
+      color:var(--muted);
+      margin-bottom:35px;
+      font-size:17px;
+    }
+
+    /* ===== FLOW STEPS ===== */
+    .steps{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      gap:24px;
+      margin-bottom:40px;
+    }
+
+    .step{
+      background:var(--soft);
+      border-radius:18px;
+      padding:24px;
+      text-align:center;
+      border:2px solid var(--border);
+    }
+
+    .step span{
+      display:inline-block;
+      background:var(--primary);
+      color:white;
+      width:34px;
+      height:34px;
+      line-height:34px;
+      border-radius:50%;
+      font-weight:700;
+      margin-bottom:10px;
+    }
+
+    .step p{
+      margin:8px 0 0;
+      font-size:15px;
+      color:#355;
+    }
+
+    /* ===== UPLOAD ===== */
+    /* ===== CLEAN UPLOAD CARD ===== */
+.upload-wrapper{
+  display:flex;
+  justify-content:center;
+  margin:45px 0;
+}
+
+.upload-card{
+  width:100%;
+  max-width:460px;
+  border:2px dashed var(--border);
+  border-radius:24px;
+  padding:42px 28px;
+  text-align:center;
+  background:linear-gradient(180deg,#f7fefe,#edf9f6);
+  cursor:pointer;
+  transition:all 0.25s ease;
+}
+
+.upload-card:hover{
+  background:#eefbf8;
+  transform:translateY(-2px);
+  box-shadow:0 12px 28px rgba(0,0,0,0.08);
+}
+
+.upload-icon{
+  font-size:52px;
+  margin-bottom:10px;
+}
+
+.upload-card h3{
+  margin:10px 0 6px;
+  font-size:21px;
+  color:var(--accent);
+  font-weight:600;
+}
+
+.upload-card p{
+  margin:0;
+  font-size:15px;
+  color:var(--muted);
+}
+
+.upload-hint{
+  display:inline-block;
+  margin-top:14px;
+  padding:6px 14px;
+  border-radius:999px;
+  background:#e6f7f4;
+  font-size:13px;
+  color:var(--accent);
+}
+
+.upload-card input[type="file"]{
+  display:none;
+}
+
+
+    /* ===== PREVIEW ===== */
+    .preview-area{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:30px;
+      margin-top:35px;
+    }
+
+    .preview-card{
+      background:#fff;
+      border-radius:18px;
+      padding:20px;
+      text-align:center;
+      border:2px solid var(--border);
+    }
+
+    .preview-card h3{
+      margin-top:0;
+      font-size:18px;
+      color:var(--accent);
+    }
+
+    img{
+      max-width:100%;
+      max-height:320px;
+      border-radius:14px;
+      margin-top:12px;
+      box-shadow:0 8px 22px rgba(0,0,0,0.12);
+    }
+
+    /* ===== BUTTON ===== */
+    .action{
+      text-align:center;
+      margin-top:40px;
+    }
+
+    button{
+      background:linear-gradient(135deg,#2bb0a6,#38d2c2);
+      color:white;
+      border:none;
+      padding:16px 36px;
+      font-size:17px;
+      font-weight:700;
+      border-radius:18px;
+      cursor:pointer;
+      box-shadow:0 12px 30px rgba(43,176,166,0.45);
+      transition:all 0.25s ease;
+    }
+
+    button:hover{
+      transform:translateY(-2px);
+    }
+
+    button:disabled{
+      opacity:0.6;
+      cursor:not-allowed;
+    }
+
+    footer{
+      margin-top:90px;
+      padding:26px;
+      background:#e7f6f3;
+      text-align:center;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    @media(max-width:768px){
+      .preview-area{ grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>🖼️ Image Color Correction</h1>
+  <a href="/">Home</a>
+</header>
+
+<div class="container">
+  <div class="card">
+
+    <h2>Color Vision Image Enhancement</h2>
+    <p class="subtitle">
+      Selected deficiency:
+      <strong id="typeLabel"></strong>
+    </p>
+
+    <!-- STEPS -->
+    <div class="steps">
+      <div class="step">
+        <span>1</span>
+        <p>Select an image to analyze</p>
+      </div>
+      <div class="step">
+        <span>2</span>
+        <p>Apply color vision correction</p>
+      </div>
+      <div class="step">
+        <span>3</span>
+        <p>Compare original vs corrected</p>
+      </div>
+    </div>
+
+    <!-- UPLOAD -->
+    <div class="upload-wrapper">
+  <label class="upload-card">
+    <div class="upload-icon">📤</div>
+    <h3>Upload Image</h3>
+    <p>PNG or JPG • Max clarity recommended</p>
+    <input type="file" id="imageInput" accept="image/*">
+  </label>
+</div>
+
+    <!-- PREVIEW -->
+    <div class="preview-area">
+      <div class="preview-card">
+        <h3>Original Image</h3>
+        <img id="originalImage" style="display:none;">
+      </div>
+
+      <div class="preview-card">
+        <h3>Corrected Image</h3>
+        <img id="resultImage" style="display:none;">
+      </div>
+    </div>
+
+    <!-- ACTION -->
+    <div class="action">
+      <button id="generateBtn" onclick="generate()">Apply Correction</button>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+</footer>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const blindnessType = params.get("type");
+  document.getElementById("typeLabel").innerText = blindnessType;
+
+  const input = document.getElementById("imageInput");
+  const original = document.getElementById("originalImage");
+  const result = document.getElementById("resultImage");
+  const btn = document.getElementById("generateBtn");
+
+  let selectedFile = null;
+
+  input.addEventListener("change", () => {
+    selectedFile = input.files[0];
+    if(selectedFile){
+      original.src = URL.createObjectURL(selectedFile);
+      original.style.display = "block";
+      result.style.display = "none";
+    }
+  });
+
+  function generate(){
+    if(!selectedFile){
+      alert("Please upload an image first");
+      return;
+    }
+
+    btn.disabled = true;
+    btn.innerText = "Processing…";
+
+    const fd = new FormData();
+    fd.append("image", selectedFile);
+    fd.append("type", blindnessType);
+
+    fetch("/generate", { method:"POST", body:fd })
+      .then(r=>r.json())
+      .then(d=>{
+        const match = d.output_images.find(n=>n.includes(blindnessType));
+        if(match){
+          result.src = "/output/" + match + "?t=" + Date.now();
+          result.style.display = "block";
+        }
+      })
+      .finally(()=>{
+        btn.disabled = false;
+        btn.innerText = "Apply Correction";
+      });
+  }
+</script>
+
+</body>
+</html>
