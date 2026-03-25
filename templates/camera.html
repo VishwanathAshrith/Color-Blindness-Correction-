@@ -428,9 +428,10 @@
           return;
         }
 
-        // Find matching output
+        // Find matching output — must start with "corrected_" so we never
+        // accidentally pick a simulate_* file that also contains the type name
         const match = data.output_images.find(name =>
-          name.includes(blindnessType)
+          name.startsWith("corrected_") && name.includes(blindnessType)
         );
 
         if (!match) {
